@@ -19,6 +19,7 @@ public class Variable {
 		this.type = type;
 		this.minRange = minRange;
 		this.maxRange = maxRange;
+		this.fuzzySets = new ArrayList<>();
 	}
 
 
@@ -50,11 +51,16 @@ public class Variable {
 	public void setFuzzySets(ArrayList<FuzzySet> fuzzySets) {
 		this.fuzzySets = fuzzySets;
 	}
+	
+	public void addFuzzySet(FuzzySet fuzzySet) {
+		this.fuzzySets.add(fuzzySet);
+	}
 
 
 	@Override
 	public String toString() {
-		return "Variable [name=" + name + ", type=" + type + ", minRange=" + minRange + ", maxRange=" + maxRange + "]";
+		return "Variable [name=" + name + ", type=" + type + ", minRange=" + minRange + ", maxRange=" + maxRange
+				+ ", fuzzySets=" + fuzzySets + "]";
 	}
 	
 	

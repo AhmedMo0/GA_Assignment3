@@ -11,6 +11,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.awt.event.ActionEvent;
@@ -44,10 +45,18 @@ public class app {
 	private JTextField txtType;
 	private JTextField txtLowerb_1;
 	private JTextField txtUpperb;
-	private JPanel varsScrollPanel;
+	public JPanel varsScrollPanel;
+	public JPanel fuzzySetsContainer;
+	String currentVariableName = "";
 
-	private ArrayList<Variable> varList;
-	private HashMap<String, Variable> varMap;
+	ArrayList<Variable> varList;
+	HashMap<String, Variable> varMap;
+	private JTextField textType;
+	private JTextField textField_1;
+	private JTextField textClassName;
+	private JTextField textField_3;
+	private JTextField textField_4;
+	private JTextField textField_5;
 
 	/**
 	 * Launch the application.
@@ -99,14 +108,53 @@ public class app {
 		panel_1.add(txtUpperb);
 		txtUpperb.setColumns(10);
 
-		Component[] c = panel_1.getComponents();
-		/*
-		 * // add var to global list Variable newVar = new Variable(txtName.getText(),
-		 * txtType.getText(), Integer.parseInt(txtLowerb_1.getText()),
-		 * Integer.parseInt(txtUpperb.getText())); varList.add(newVar);
-		 */
-
 		return panel_1;
+	}
+	
+	private JPanel generateSubClassPanel() {
+		JPanel subFuzzySetPanel = new JPanel();
+		fuzzySetsContainer.add(subFuzzySetPanel);
+		subFuzzySetPanel.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		JPanel panel_1_1 = new JPanel();
+		subFuzzySetPanel.add(panel_1_1);
+		panel_1_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		
+		textClassName = new JTextField();
+		textClassName.setText("className");
+		textClassName.setColumns(10);
+		panel_1_1.add(textClassName);
+		
+		textType = new JTextField();
+		textType.setText("Type");
+		textType.setColumns(10);
+		panel_1_1.add(textType);
+		
+		textField_1 = new JTextField();
+		textField_1.setText("0");
+		textField_1.setColumns(10);
+		panel_1_1.add(textField_1);
+		
+		
+		
+		textField_3 = new JTextField();
+		textField_3.setText("0");
+		textField_3.setColumns(10);
+		panel_1_1.add(textField_3);
+		
+		textField_4 = new JTextField();
+		textField_4.setText("0");
+		textField_4.setColumns(10);
+		panel_1_1.add(textField_4);
+		
+		textField_5 = new JTextField();
+		textField_5.setText("0");
+		textField_5.setColumns(10);
+		panel_1_1.add(textField_5);
+
+		
+		return subFuzzySetPanel;
 	}
 
 	/**
@@ -171,55 +219,170 @@ public class app {
 		btnAddAnotherV.setBounds(32, 210, 133, 23);
 		variablesPanel.add(btnAddAnotherV);
 
-		JButton btnSubmit = new JButton("Submit");
-		btnSubmit.addActionListener(new ActionListener() {
+		
+
+		JPanel FuzzySetsPanel = new JPanel();
+		tabbedPane.addTab("FuzzySets", null, FuzzySetsPanel, null);
+		FuzzySetsPanel.setLayout(new CardLayout(0, 0));
+		
+		JPanel varButtonsPanel = new JPanel();
+		FuzzySetsPanel.add(varButtonsPanel, "name_9802729175500");
+		
+		
+		
+		
+		JPanel varClassesPanel = new JPanel();
+		FuzzySetsPanel.add(varClassesPanel, "name_9838177275700");
+		varClassesPanel.setLayout(null);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(10, 11, 431, 183);
+		varClassesPanel.add(scrollPane_1);
+		
+		fuzzySetsContainer = new JPanel();
+		scrollPane_1.setViewportView(fuzzySetsContainer);
+		fuzzySetsContainer.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		JPanel subFuzzySetPanel = new JPanel();
+		fuzzySetsContainer.add(subFuzzySetPanel);
+		subFuzzySetPanel.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		JPanel panel_1_1 = new JPanel();
+		subFuzzySetPanel.add(panel_1_1);
+		panel_1_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		textClassName = new JTextField();
+		textClassName.setText("className");
+		textClassName.setColumns(10);
+		panel_1_1.add(textClassName);
+		
+		textType = new JTextField();
+		textType.setText("Type");
+		textType.setColumns(10);
+		panel_1_1.add(textType);
+		
+		textField_1 = new JTextField();
+		textField_1.setText("0");
+		textField_1.setColumns(10);
+		panel_1_1.add(textField_1);
+		
+		textField_3 = new JTextField();
+		textField_3.setText("0");
+		textField_3.setColumns(10);
+		panel_1_1.add(textField_3);
+		
+		textField_4 = new JTextField();
+		textField_4.setText("0");
+		textField_4.setColumns(10);
+		panel_1_1.add(textField_4);
+		
+		textField_5 = new JTextField();
+		textField_5.setText("0");
+		textField_5.setColumns(10);
+		panel_1_1.add(textField_5);
+		
+		JButton btnAddAnotherClass = new JButton("add another class");
+		btnAddAnotherClass.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				for (Component c : varsScrollPanel.getComponents()) {
+				fuzzySetsContainer.add(generateSubClassPanel());
+				fuzzySetsContainer.revalidate();
+			}
+		});
+		
+		btnAddAnotherClass.setBounds(35, 210, 133, 23);
+		varClassesPanel.add(btnAddAnotherClass);
+		
+		// to assign fuzzySets to its variable
+		
+		
+		JButton btnSubmit_1 = new JButton("Submit");
+		btnSubmit_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				for (Component c : subFuzzySetPanel.getComponents()) {
 					if (c instanceof JPanel) {
 						JPanel panel = ((JPanel) c);
 						int cnt = ((JPanel) c).getComponentCount();
 
 						String txtName = ((JTextField) panel.getComponent(0)).getText();
 						String txtType = ((JTextField) panel.getComponent(1)).getText();
-						Integer lowerB = Integer.parseInt(((JTextField) panel.getComponent(2)).getText());
-						Integer upperB = Integer.parseInt(((JTextField) panel.getComponent(3)).getText());
-
-						Variable newVar = new Variable(txtName, txtType, lowerB, upperB);
-						varMap.put(txtName, newVar);
+						Integer aVal = Integer.parseInt(((JTextField) panel.getComponent(2)).getText());
+						Integer bVal = Integer.parseInt(((JTextField) panel.getComponent(3)).getText());
+						Integer cVal = Integer.parseInt(((JTextField) panel.getComponent(4)).getText());
+						Integer dVal = Integer.parseInt(((JTextField) panel.getComponent(5)).getText());
+						
+						FuzzySet newSet = new FuzzySet(txtName, txtType, new ArrayList<>(Arrays.asList(aVal, bVal, cVal, dVal)) );
+						varMap.get(currentVariableName).addFuzzySet(newSet);
 
 					}
 
 				}
-
-				/*
-				 * for (Map.Entry<String, Variable> set : varMap.entrySet()) {
-				 * 
-				 * // Printing all elements of a Map System.out.println(set.getKey() + " = " +
-				 * set.getValue()); }
-				 */
-
+				
+				System.out.println("*******************");
+				System.out.println(varMap.toString());
+				System.out.println("*******************");
+				
 			}
 		});
-
-		btnSubmit.setBounds(254, 210, 65, 23);
-		variablesPanel.add(btnSubmit);
-
-		JPanel FuzzySetsPanel = new JPanel();
-		tabbedPane.addTab("FuzzySets", null, FuzzySetsPanel, null);
-		FuzzySetsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		btnSubmit_1.setBounds(206, 210, 65, 23);
+		varClassesPanel.add(btnSubmit_1);
 
 		
-		  for (Map.Entry<String, Variable> set : varMap.entrySet()) {
 		  
-			  System.out.println(set.getKey() + " = " +set.getValue()); 
-			  JButton btnNewButton = new JButton(set.getKey());
-				btnNewButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
+		  
+		  
+		  JButton btnSubmit = new JButton("Submit");
+			btnSubmit.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					for (Component c : varsScrollPanel.getComponents()) {
+						if (c instanceof JPanel) {
+							JPanel panel = ((JPanel) c);
+							int cnt = ((JPanel) c).getComponentCount();
+
+							String txtName = ((JTextField) panel.getComponent(0)).getText();
+							String txtType = ((JTextField) panel.getComponent(1)).getText();
+							Integer lowerB = Integer.parseInt(((JTextField) panel.getComponent(2)).getText());
+							Integer upperB = Integer.parseInt(((JTextField) panel.getComponent(3)).getText());
+
+							Variable newVar = new Variable(txtName, txtType, lowerB, upperB);
+							varMap.put(txtName, newVar);
+
+						}
+
 					}
-				});
-				FuzzySetsPanel.add(btnNewButton);
-		  }
-		 
+
+					
+					// add variables' buttons to fuzzySetsLayout
+					for (Map.Entry<String, Variable> set : varMap.entrySet()) {
+						  
+						  System.out.println(set.getKey() + " = " +set.getValue()); 
+						  JButton btnNewButton = new JButton(set.getKey());
+							btnNewButton.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent e) {
+									currentVariableName = set.getKey();
+									varClassesPanel.setVisible(true);
+									varButtonsPanel.setVisible(false);
+								}
+							});
+							varButtonsPanel.add(btnNewButton);
+					  }
+				}
+			});
+
+			btnSubmit.setBounds(254, 210, 65, 23);
+			variablesPanel.add(btnSubmit);
+			
+			
+			/*
+			 * for (Component component : varButtonsPanel.getComponents()) { if (component
+			 * instanceof JButton) { ((JButton) component).addActionListener(new
+			 * ActionListener() { public void actionPerformed(ActionEvent e) {
+			 * varClassesPanel.setVisible(true); varButtonsPanel.setVisible(false);
+			 * 
+			 * System.out.println("heree?????");
+			 * 
+			 * } }); } }
+			 */
+			 
 		
 	}
 }
