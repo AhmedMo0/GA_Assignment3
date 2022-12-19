@@ -2,6 +2,8 @@ import java.util.ArrayList;
 
 public class Variable {
 	String name;
+	String type;
+	Integer minRange, maxRange;
 	ArrayList<FuzzySet> fuzzySets;
 	
 	public Variable(String name)
@@ -11,8 +13,24 @@ public class Variable {
 	
 	}
 	
+	
+	public Variable(String name, String type, Integer minRange, Integer maxRange) {
+		this.name = name;
+		this.type = type;
+		this.minRange = minRange;
+		this.maxRange = maxRange;
+	}
+
+
 	public Variable(String name, ArrayList<FuzzySet> fuzzySets) {
 		this.name = name;
+		this.fuzzySets = new ArrayList<>(fuzzySets);
+		
+	}
+	
+	public Variable(String name, String type, ArrayList<FuzzySet> fuzzySets) {
+		this.name = name;
+		this.type = type;
 		this.fuzzySets = new ArrayList<>(fuzzySets);
 		
 	}
@@ -31,6 +49,12 @@ public class Variable {
 
 	public void setFuzzySets(ArrayList<FuzzySet> fuzzySets) {
 		this.fuzzySets = fuzzySets;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Variable [name=" + name + ", type=" + type + ", minRange=" + minRange + ", maxRange=" + maxRange + "]";
 	}
 	
 	
