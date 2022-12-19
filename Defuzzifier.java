@@ -1,32 +1,56 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Defuzzifier {
+    Variable out;
+
+    public Defuzzifier(Variable out) {
+        this.out = out;
+    }
+
+    public Variable getOut() {
+        return out;
+    }
+
+    public void setOut(Variable out) {
+        this.out = out;
+    }
+
     /**
-     * Function that returns crisp value using weighted-average method.
-     *
-     * @param out The output variable.
-     * @param memValues The membership values.
-     * @return Crisp Value (Z*).
+     * Function that returns predicted value using weighted-average method.
      */
-    double getPrediction(Variable out, ArrayList<Double> memValues){
+    public void getPrediction(){
+
         ArrayList<FuzzySet> fuzzySets = out.getFuzzySets();
 
         double up = 0; // Numerator.
+        double down = 0; // Denominator.
 
         // Calculating centroid values.
         for(int i = 0; i < fuzzySets.size(); i++){
             FuzzySet fs = fuzzySets.get(i);
             ArrayList<Pair<Integer, Integer>> points = fs.getPoints();
+
             double centroid = 0;
             for (Pair<Integer, Integer> point : points) centroid += point.first;
             centroid /= points.size();
-            up += centroid * memValues.get(i);
+            up += centroid * fs.memValue;
+            down += fs.memValue;
         }
 
-        double down = 0; // Denominator.
-        for (Double memValue : memValues) down += memValue;
+        double crisp = up / down; // (Z*)
 
-        return up / down;
+        // Getting maximum membership value.
+        double max = 0;
+        String max_set = "";
+        for(FuzzySet fs : fuzzySets){
+            if (fs.memValue > max){
+                max = fs.memValue;
+                max_set = fs.getName();
+            }
+        }
+
+        System.out.println("The predicted " + out.name + " is " + max_set + " (" + crisp + ")");
     }
 
 }
